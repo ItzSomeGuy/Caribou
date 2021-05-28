@@ -40,8 +40,7 @@ def update_member_data():
             if file.endswith('-members.csv'):  # file name: guild_name-members.csv
                 if file[:-12] == guild_name:  # file name: [guild_name]-members.csv
                     print(file)
-                    data = open(f'./data/{file}', 'r')  # sets data if file exists, is None if file does not exist
-                    break
+                    data = open(f'./data/{file}', 'w+')  # sets data if file exists, is None if file does not exist
 
         if data is None:
             with open(f'./data/{guild_name}-members.csv', 'w', newline='') as file:
@@ -52,15 +51,11 @@ def update_member_data():
         else:
             # store current CSV -> update name,roles,ge_multi -> override CSV
             dt = []
-            print(data)
             reader = csv.reader(data)
             for i, row in enumerate(reader):
                 print(row)
-                dt.append([row[3], row[4], row[6]])
+                dt.append((row[3], row[4], row[6]))
             print(dt)
-            data.close()
-
-            data = open(f'./data/{file}', 'w')
             writer = csv.writer(data)
             writer.writerow(['Name', 'ID', 'Roles', 'Insured', 'GE', 'GE_Multi', 'rank'])
             for i, member in enumerate(members):
