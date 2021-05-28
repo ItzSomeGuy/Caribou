@@ -11,7 +11,7 @@ load_dotenv()
 client = commands.Bot(command_prefix='~', intents=discord.Intents.all())
 TOKEN = os.getenv('TOKEN')
 
-
+# I'm sure it's perfect
 @client.event
 async def on_ready():
     print(f'{client.user} is online')
