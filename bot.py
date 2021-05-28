@@ -39,8 +39,7 @@ def update_member_data():
         for file in os.listdir('./data'):
             if file.endswith('-members.csv'):  # file name: guild_name-members.csv
                 if file[:-12] == guild_name:  # file name: [guild_name]-members.csv
-                    print(file)
-                    data = open(f'./data/{file}', 'w+')  # sets data if file exists, is None if file does not exist
+                    data = open(f'./data/{file}', 'r')  # sets data if file exists, is None if file does not exist
 
         if data is None:
             with open(f'./data/{guild_name}-members.csv', 'w', newline='') as file:
@@ -53,14 +52,16 @@ def update_member_data():
             dt = []
             reader = csv.reader(data)
             for i, row in enumerate(reader):
-                print(row)
                 dt.append((row[3], row[4], row[6]))
-            print(dt)
+            data.close()
+
+            data = open(f'./data/{file}', 'w')
             writer = csv.writer(data)
             writer.writerow(['Name', 'ID', 'Roles', 'Insured', 'GE', 'GE_Multi', 'rank'])
             for i, member in enumerate(members):
                 tp = dt[i]
                 writer.writerow([member.name, member.id, member.roles, tp[0], tp[1], 1, tp[2]])
+            data.close()
 
 
 @client.command()
@@ -73,6 +74,6 @@ async def update(ctx):
 for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):
         client.load_extension(f'cogs.{filename[:-3]}')
-        print(f'loaded {filename[:-3]}')
+        print(f'loaded: {filename}')
 
 client.run(TOKEN)
