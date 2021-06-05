@@ -9,6 +9,7 @@ from datetime import datetime
 load_dotenv()
 
 client = commands.Bot(command_prefix='~', intents=discord.Intents.all())
+client.remove_command('help')
 TOKEN = os.getenv('TOKEN')
 
 
