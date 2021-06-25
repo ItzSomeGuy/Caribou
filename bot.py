@@ -9,6 +9,7 @@ from datetime import datetime
 load_dotenv()
 
 client = commands.Bot(command_prefix='~', intents=discord.Intents.all())
+client.remove_command('help')
 TOKEN = os.getenv('TOKEN')
 
 # I'm sure it's perfect
@@ -52,6 +53,8 @@ def update_member_data():
             dt = []
             reader = csv.reader(data)
             for i, row in enumerate(reader):
+                if i == 0:
+                    continue
                 dt.append((row[3], row[4], row[6]))
             data.close()
 
