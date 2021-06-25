@@ -1,5 +1,4 @@
 import random
-
 import discord
 from discord.ext import commands
 
@@ -10,6 +9,22 @@ class General(commands.Cog):
     def __init__(self, client):
         self.client = client
 
+
+
+
+    @commands.Cog.listener()
+    async def on_voice_state_update(self, ctx):
+        for c in punishments:
+            if c.category is None and c.members is None:
+                await ctx.channel.delete(c)
+                punishments.remove(c)
+
+    @commands.command()
+    async def punish(self, ctx):
+        channel = await ctx.guild.create_voice_channel('Auschwitz')
+        channel.append(channel)
+        target = ctx.message.mentions[0]
+        await target.move_to(channel)
 
 
 
