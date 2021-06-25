@@ -3,10 +3,15 @@ import random
 import discord
 from discord.ext import commands
 
+punishments = []
+
 
 class General(commands.Cog):
     def __init__(self, client):
         self.client = client
+
+
+
 
     @commands.command(aliases=["8ball"])
     async def _8ball(self, ctx, *, question):
@@ -59,10 +64,34 @@ class General(commands.Cog):
         embed.add_field(name="ban [member]", value="beans someone", inline=False)
         embed.add_field(name="hello", value="used as a greeting or to begin a telephone conversation", inline=False)
         embed.add_field(name="help", value="this..", inline=False)
+        embed.add_field(name="punish [member]", value="punishes a user that you see fit", inline=False)
         embed.add_field(name="rename [member] [nickname]", value="use to rename a member", inline=False)
         embed.add_field(name="stalk [member]", value="fetches avatar of someone", inline=False)
-
         await ctx.send(embed=embed)
+
+    @commands.command()
+    async def punish(self, ctx):
+        channel = await ctx.guild.create_voice_channel('Auschwitz')
+        target = ctx.message.mentions[0]
+        await target.move_to(channel)
+
+        #TODO delete channel after target leaves channel
+
+    # punishments = []
+    #
+    # @commands.Cog.listener()
+    # async def on_voice_state_update(self, ctx):
+    #     for c in punishments:
+    #         if c.category is None and c.members is None:
+    #             await ctx.channel.delete(c)
+    #             punishments.remove(c)
+    #
+    # @commands.command()
+    # async def punish(self, ctx):
+    #     channel = await ctx.guild.create_voice_channel('Auschwitz')
+    #     channel.append(channel)
+    #     target = ctx.message.mentions[0]
+    #     await target.move_to(channel)
 
     @commands.command()
     async def rename(self, ctx, target, *args):
