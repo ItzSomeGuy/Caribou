@@ -2,31 +2,21 @@ import random
 import discord
 from discord.ext import commands
 
-punishments = []
+a_punishments = []
+
 
 
 class General(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-
-
-
     @commands.Cog.listener()
-    async def on_voice_state_update(self, ctx):
-        for c in punishments:
-            if c.category is None and c.members is None:
-                await ctx.channel.delete(c)
-                punishments.remove(c)
-
-    @commands.command()
-    async def punish(self, ctx):
-        channel = await ctx.guild.create_voice_channel('Auschwitz')
-        channel.append(channel)
-        target = ctx.message.mentions[0]
-        await target.move_to(channel)
-
-
+    async def on_voice_state_update(self, member, before, after):
+        if before.channel and before.channel.category is None and before.channel.members == []:
+            for p in a_punishments:
+                if p.id == before.channel.id:
+                    await before.channel.delete()
+                    a_punishments.remove(p)
 
     @commands.command(aliases=["8ball"])
     async def _8ball(self, ctx, *, question):
@@ -84,29 +74,23 @@ class General(commands.Cog):
         embed.add_field(name="stalk [member]", value="fetches avatar of someone", inline=False)
         await ctx.send(embed=embed)
 
+
+
     @commands.command()
     async def punish(self, ctx):
-        channel = await ctx.guild.create_voice_channel('Auschwitz')
-        target = ctx.message.mentions[0]
-        await target.move_to(channel)
+        if ctx.message.mentions[0].voice:
+            names = ['Auschwitz', 'Literal Hell', 'The Void',
+                     'The Shadow Realm', 'The Firing Squad',
+                     'Guantanamo Bay', '6 Feet Under',
+                     'The Gulag', 'Back to Canada',
+                     'The Crucifixion Cross', 'The Midnight Facility']
+            channel = await ctx.guild.create_voice_channel(random.choice(names))
+            a_punishments.append(channel)
 
-        #TODO delete channel after target leaves channel
+            target = ctx.message.mentions[0]
+            await target.move_to(channel)
 
-    # punishments = []
-    #
-    # @commands.Cog.listener()
-    # async def on_voice_state_update(self, ctx):
-    #     for c in punishments:
-    #         if c.category is None and c.members is None:
-    #             await ctx.channel.delete(c)
-    #             punishments.remove(c)
-    #
-    # @commands.command()
-    # async def punish(self, ctx):
-    #     channel = await ctx.guild.create_voice_channel('Auschwitz')
-    #     channel.append(channel)
-    #     target = ctx.message.mentions[0]
-    #     await target.move_to(channel)
+
 
     @commands.command()
     async def rename(self, ctx, target, *args):
