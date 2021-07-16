@@ -69,13 +69,29 @@ class General(commands.Cog):
         embed.add_field(name="ban [member]", value="beans someone", inline=False)
         embed.add_field(name="hello", value="used as a greeting or to begin a telephone conversation", inline=False)
         embed.add_field(name="help", value="this..", inline=False)
+        embed.add_field(name="music", value="shows all music related commands", inline=False)
         embed.add_field(name="punish [member]", value="punishes a user that you see fit", inline=False)
         embed.add_field(name="rename [member] [nickname]", value="use to rename a member", inline=False)
         embed.add_field(name="stalk [member]", value="fetches avatar of someone", inline=False)
         await ctx.send(embed=embed)
 
+    @commands.command()
+    async def music(self, ctx):
 
+        author = ctx.message.author
 
+        embed = discord.Embed(
+            colour=discord.Colour.blurple()
+        )
+
+        embed.set_author(name="Music")
+
+        embed.add_field(name="play", value="usage: ~play [youtube link here without brackets]. This plays audio from any youtube link", inline=False)
+        embed.add_field(name="pause", value="pauses any currently playing audio", inline=False)
+        embed.add_field(name="resume", value="resumes any paused audio", inline=False)
+        embed.add_field(name="skip", value="skips currently playing audio", inline=False)
+        embed.add_field(name="stop", value="stops all audio", inline=False)
+        await ctx.send(embed=embed)
     @commands.command()
     async def punish(self, ctx):
         if ctx.message.mentions[0].voice:

@@ -12,3 +12,4 @@ python-dotenv==0.17.1
 six==1.16.0
 typing-extensions==3.10.0.0
 yarl==1.6.3
+ffmpeg==1.4
