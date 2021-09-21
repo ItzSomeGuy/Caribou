@@ -45,9 +45,9 @@ def update_member_data():
         if data is None:
             with open(f'./data/{guild_name}-members.csv', 'w', newline='') as file:
                 writer = csv.writer(file)
-                writer.writerow(['Name', 'ID', 'Roles', 'Insured', 'GE', 'GE_Multi', 'rank'])
+                writer.writerow(['Name', 'ID', 'Roles', 'Nickname', 'Insured', 'GE', 'GE_Multi', 'GE_Posted', 'GE_First_Time', 'New'])
                 for member in members:
-                    writer.writerow([member.name, member.id, member.roles, False, False, 1, 'None'])
+                    writer.writerow([member.name, member.id, member.roles, member.nick, False, None, 1, False, True, False])
         else:
             # store current CSV -> update name,roles,ge_multi -> override CSV
             dt = []
