@@ -55,15 +55,16 @@ def update_member_data():
             for i, row in enumerate(reader):
                 if i == 0:
                     continue
-                dt.append((row[3], row[4], row[6]))
+                dt.append((row[4], row[5], row[7], row[8], row[9]))
             data.close()
 
             data = open(f'./data/{file}', 'w')
             writer = csv.writer(data)
-            writer.writerow(['Name', 'ID', 'Roles', 'Insured', 'GE', 'GE_Multi', 'rank'])
+            # Name,ID,Roles,Nickname,Insured,GE,GE_Multi,GE_Posted,GE_FirstTime,New
+            writer.writerow(['Name', 'ID', 'Roles', 'Nickname', 'Insured', 'GE', 'GE_Multi', 'GE_Posted', 'GE_First_Time', 'New'])
             for i, member in enumerate(members):
                 tp = dt[i]
-                writer.writerow([member.name, member.id, member.roles, tp[0], tp[1], 1, tp[2]])
+                writer.writerow([member.name, member.id, member.roles, member.nick, tp[0], tp[1], 1, tp[2], tp[3], tp[4]])
             data.close()
 
 
